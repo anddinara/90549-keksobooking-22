@@ -1,16 +1,79 @@
-const getRandomNumber = function (startOfRange, endOfRange, symbolsAfterPoint) {
-  if (startOfRange < 0 || endOfRange < 0) {
-  // диапазон должен быть положительным, включая ноль
-    return 0;
-  } else if (endOfRange <= startOfRange) {
-  // реализовать логику, если "до" меньше или равно "от"
-    return 0;
-  } else {
-    let randomNumber = Math.random() * (endOfRange - startOfRange + 1) + startOfRange;
-    return randomNumber.toFixed(symbolsAfterPoint);
-  }
-  // возвращает случайное число с плавающей точкой
-  // могут быть дробные числа 1,1 или 1,2
+const getRandomNumber = (min, max, floating = 0) => {
+  const randomNumber = _.random(min, max, true);
+  return randomNumber.toFixed(floating);
 };
 
-getRandomNumber(50, 60, 2);
+const getRandomArrayElement = (elements) => {
+  return elements[getRandomNumber(0, elements.length - 1)];
+};
+
+const TITLES = [
+  'Удивительная квартира с видом на лес',
+  'Самый замечательный вид!',
+  'Шикарное место',
+];
+
+const TYPES = [
+  'palace', 
+  'flat', 
+  'house', 
+  'bungalow',
+];
+
+const CHECKIN_TIMES = [
+  '12:00', 
+  '13:00',
+  '14:00',
+];
+
+const CHECKOUT_TIMES = [
+  '12:00', 
+  '13:00',
+  '14:00',
+];
+
+const FEATURES = [
+  'wifi', 
+  'dishwasher', 
+  'parking', 
+  'washer', 
+  'elevator', 
+  'conditioner',
+];
+
+const PHOTOS = [
+  'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
+  'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
+  'http://o0.github.io/assets/images/tokyo/hotel3.jpg',
+];
+
+const SIMILAR_AD_COUNT = 10;
+
+const createAd = () => {
+  return {
+    author: {
+      avatar: `img/avatars/user0${getRandomNumber(1, 8)}.png`,
+    },
+    offer: {
+      title: getRandomArrayElement(TITLES),
+      address: `${getRandomNumber(35.65000, 35.70000, 5)}, ${getRandomNumber(139.70000, 139.80000, 5)}`,
+      price: getRandomNumber(5000, 10000, 2),
+      type: getRandomArrayElement(TYPES),
+      rooms: getRandomNumber(1, 5),
+      guests: getRandomNumber(1, 5),
+      checkin: getRandomArrayElement(CHECKIN_TIMES),
+      checkout: getRandomArrayElement(CHECKOUT_TIMES),
+      features: FEATURES.slice(getRandomNumber(1, 2), getRandomNumber(2, FEATURES.length - 1)),
+      description: 'Описание',
+      photos: PHOTOS.slice(getRandomNumber(0, PHOTOS.length - 1)),
+    },
+    location: {
+      x: getRandomNumber(35.65000, 35.70000, 5),
+      y: getRandomNumber(139.70000, 139.80000, 5),
+    },
+  };
+};
+
+// address c маской?
+
+const similarAds = new Array(SIMILAR_AD_COUNT).fill(null).map(() => createAd());
