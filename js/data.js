@@ -57,7 +57,7 @@ const createAd = () => {
       checkin: getRandomArrayElement(CHECKIN_TIMES),
       checkout: getRandomArrayElement(CHECKOUT_TIMES),
       features: FEATURES.slice(getRandomNumber(1, 2), getRandomNumber(2, FEATURES.length - 1)),
-      description: 'Описание',
+      description: 'Описание всего-всего!',
       photos: PHOTOS.slice(getRandomNumber(0, PHOTOS.length - 1)),
     },
     location: {
@@ -69,6 +69,6 @@ const createAd = () => {
   
 // address c маской?
   
-const similarAds = new Array(SIMILAR_AD_COUNT).fill(null).map(() => createAd());
+const createAds = () => new Array(SIMILAR_AD_COUNT).fill(null).map(() => createAd());
 
-export { similarAds };
+export { createAds };
