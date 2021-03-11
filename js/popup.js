@@ -1,4 +1,5 @@
 import { createAds } from './data.js';
+import { map } from './map.js';
 
 const TypesOfHousing = {
   flat: 'Квартира',
@@ -41,6 +42,22 @@ const createPhoto = (array) => {
 };
 
 similarAds.forEach((ad) => {
+  const icon = L.icon({
+    iconUrl: './img/pin.svg',
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+  });
+
+  const marker = L.marker(
+    {
+      lat: ad.location.x,
+      lng: ad.location.y,
+    },
+    {
+      icon,
+    },
+  );
+
   const adElement = template.cloneNode(true);
   adElement.querySelector('.popup__title').textContent =
     ad.offer.title;
@@ -67,8 +84,11 @@ similarAds.forEach((ad) => {
   photos.appendChild(createPhoto(ad.offer.photos));
 
   adElement.querySelector('.popup__avatar').src = ad.author.avatar;
+  console.log(adElement);
 
-  // mapAd.appendChild(adElement);
+  marker
+    .addTo(map)
+    .bindPopup(adElement);
 });
 
 // Если данных для заполнения не хватает, соответствующий блок в карточке скрывается.
