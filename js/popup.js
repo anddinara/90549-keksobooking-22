@@ -1,4 +1,3 @@
-import { createAds } from './data.js';
 import { map } from './map.js';
 
 const TypesOfHousing = {
@@ -13,8 +12,6 @@ const mapAd = document.querySelector('#map-canvas');
 const template = document.querySelector('#card')
   .content
   .querySelector('.popup');
-
-const similarAds = createAds();
 
 const createFeature = (array) => {
   const featuresList = document.createDocumentFragment();
@@ -41,7 +38,9 @@ const createPhoto = (array) => {
   return photosList;
 };
 
-similarAds.forEach((ad) => {
+const renderSimilarList = (similarAds) => {
+  similarAds.forEach((ad) => {
+
   const icon = L.icon({
     iconUrl: './img/pin.svg',
     iconSize: [40, 40],
@@ -50,8 +49,8 @@ similarAds.forEach((ad) => {
 
   const marker = L.marker(
     {
-      lat: ad.location.x,
-      lng: ad.location.y,
+      lat: ad.location.lat,
+      lng: ad.location.lng,
     },
     {
       icon,
@@ -84,12 +83,14 @@ similarAds.forEach((ad) => {
   photos.appendChild(createPhoto(ad.offer.photos));
 
   adElement.querySelector('.popup__avatar').src = ad.author.avatar;
-  console.log(adElement);
 
   marker
     .addTo(map)
     .bindPopup(adElement);
-});
+  });
+};
+
+export { renderSimilarList };
 
 // Если данных для заполнения не хватает, соответствующий блок в карточке скрывается.
 

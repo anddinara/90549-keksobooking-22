@@ -75,6 +75,6 @@ mainPinMarker.on('moveend', (evt) => {
     `${evt.target.getLatLng().lat.toFixed(5)}, ${evt.target.getLatLng().lng.toFixed(5)}`;
 });
 
-export { map };
+export { map, coordinatesInfo, mainPinMarker};
 
 // удаление метки mainPinMarker.remove();
